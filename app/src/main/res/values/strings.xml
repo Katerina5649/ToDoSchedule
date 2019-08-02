@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ToDoSchedule</string>
+    <string name="the_hint">The hint...</string>
 </resources>
