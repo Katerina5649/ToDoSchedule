@@ -8,11 +8,17 @@ import android.widget.CalendarView
 
 class MainActivity : AppCompatActivity() {
 
-    var mapOfArrays : HashMap<String, Array<String>> = HashMap()
-
     companion object {
         @JvmStatic
         var arrayOfItems :Array<String> =  emptyArray()
+        var mapOfArrays : HashMap<String, Array<String>> = HashMap()
+        var key : String = ""
+        fun  addStringToList(toDo : String){
+           //МЕняется не только лист, но и мапа
+            arrayOfItems += toDo
+            mapOfArrays[key] = arrayOfItems
+        }
+
     }
 
     fun convertDateToKey( year: Int, month : Int, dayOfMonth : Int): String {
@@ -33,15 +39,15 @@ class MainActivity : AppCompatActivity() {
         //Эта строка ответсвенна за клики на дату
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
 
-            val key : String = convertDateToKey(year, month, dayOfMonth)
-            if (mapOfArrays.containsKey(key))
+            key = convertDateToKey(year, month, dayOfMonth)
+            if (mapOfArrays.containsKey(key)) {
                 arrayOfItems = mapOfArrays.get(key)!!
+            }
             else {
-                arrayOfItems = arrayOf("Это","Мой","Массив")
-                mapOfArrays.put(key, arrayOfItems)
+                arrayOfItems = arrayOf()
+                mapOfArrays[key] = arrayOfItems
             }
 
-            arrayOfItems += key
             //переход на ActivityList
             val intent = Intent(this@MainActivity, ActivityList::class.java)
             startActivity(intent)
